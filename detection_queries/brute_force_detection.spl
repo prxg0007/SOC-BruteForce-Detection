@@ -1,0 +1,74 @@
+// ============================================================
+// SOC Detection Lab — SSH Brute Force Detection Queries
+// Sourcetype: linux_secure  |  Index: main (or soc_lab)
+// ============================================================
+
+// ------------------------------------------------------------
+// QUERY 1: Baseline — failed logins by source IP
+// Purpose: Initial visibility into who is attempting to log in
+// ------------------------------------------------------------
+index=main sourcetype=linux_secure "Failed password"
+| rex field=_raw "Failed password for (invalid user )?(?<user>\S+) from (?<src_ip>\S+)"
+| stats count as failed_attempts by src_ip, user
+| sort - failed_attempts
+
+
+// ------------------------------------------------------------
+// QUERY 2: Brute Force Detection (Alert Base Query)
+// Purpose: Flag IPs exceeding a failed-login threshold
+// Use this one as the saved search behind your alert.
+// ------------------------------------------------------------
+index=main sourcetype=linux_secure "Failed password"
+| rex field=_raw "Failed password for (invalid user )?(?<user>\S+) from (?<src_ip>\S+)"
+| bucket _time span=5m
+| stats count as failed_attempts by src_ip, _time
+| where failed_attempts > 10
+| sort - failed_attempts
+
+
+// ------------------------------------------------------------
+// QUERY 3: Compromise Indicator
+// Purpose: Find IPs that failed many times AND eventually succeeded
+// This is the highest-severity signal — likely successful brute force
+// ------------------------------------------------------------
+index=main sourcetype=linux_secure ("Failed password" OR "Accepted password")
+| rex field=_raw "(Failed|Accepted) password for (invalid user )?(?<user>\S+) from (?<src_ip>\S+)"
+| eval status=if(match(_raw,"Accepted"),"success","failed")
+| stats count(eval(status="failed")) as failed_count \
+        count(eval(status="success")) as success_count \
+        by src_ip, user
+| where failed_count > 10 AND success_count > 0
+| sort - failed_count
+
+
+// ------------------------------------------------------------
+// QUERY 4: Attack Velocity (time between attempts)
+// Purpose: Distinguish automated brute force (fast, regular)
+// from a human mistyping a password a few times (slow, irregular)
+// ------------------------------------------------------------
+index=main sourcetype=linux_secure "Failed password"
+| rex field=_raw "Failed password for (invalid user )?(?<user>\S+) from (?<src_ip>\S+)"
+| sort src_ip, _time
+| streamstats current=f last(_time) as prev_time by src_ip
+| eval gap_seconds = _time - prev_time
+| stats avg(gap_seconds) as avg_gap_seconds count as attempts by src_ip
+| where attempts > 10 AND avg_gap_seconds < 5
+| sort avg_gap_seconds
+
+
+// ------------------------------------------------------------
+// QUERY 5: Timeline for Dashboard
+// Purpose: Failed vs successful logins over time (timechart panel)
+// ------------------------------------------------------------
+index=main sourcetype=linux_secure ("Failed password" OR "Accepted password")
+| eval status=if(match(_raw,"Accepted"),"success","failed")
+| timechart span=1m count by status
+
+
+// ------------------------------------------------------------
+// QUERY 6: Top Targeted Usernames
+// Purpose: See if attacker is targeting specific accounts (e.g. root, admin)
+// ------------------------------------------------------------
+index=main sourcetype=linux_secure "Failed password"
+| rex field=_raw "Failed password for (invalid user )?(?<user>\S+) from (?<src_ip>\S+)"
+| top limit=10 user
