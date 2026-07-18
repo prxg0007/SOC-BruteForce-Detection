@@ -158,6 +158,17 @@ See `mitre_mapping.md`. Primary technique: **T1110 – Brute Force** (sub-techni
 This shows you can work with raw logs, not just a GUI.
 
 ---
+## 📸 Detection Results
+
+**Brute Force Alert Query**
+![Brute Force Detection](screenshots/Query2.png)
+
+**Compromise Indicator (failed → success)**
+![Compromise indicator](screenshots/Query3.png)
+
+
+**Dashboard Overview**
+![Dashboard](screenshots/ssh_monitoring.png)
 
 ## 📁 Repository Structure
 
