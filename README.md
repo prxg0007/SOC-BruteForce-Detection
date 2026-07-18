@@ -179,7 +179,7 @@ SOC-BruteForce-Detection/
 │   └── sample_incident_report.md
 ├── mitre_mapping.md
 ├── cloud_extension.md
-└── screenshots/          ← add your own Splunk screenshots here
+└── screenshots/          
 ```
 
 ---
