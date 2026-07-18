@@ -1,6 +1,6 @@
 # 🚨 SOC Detection Lab: SSH Brute Force Detection & Investigation using Splunk
 
-**Author:** [Your Name]
+**Author:** Parag Dharmadhikari
 **Role Target:** SOC Analyst / Cloud Security Intern
 **Tools Used:** Splunk (SIEM), Linux (Ubuntu), Python, Hydra (attack simulation)
 
@@ -195,9 +195,4 @@ SOC-BruteForce-Detection/
 - Python log parsing / automation
 - Cloud security translation (AWS CloudTrail / GuardDuty equivalents)
 
-## 🔜 Next Project
 
-Once this is on GitHub: build a **cloud-native version** — ingest AWS CloudTrail
-logs into Splunk (or use Splunk's sample CloudTrail dataset), detect IAM misuse
-and S3 bucket misconfiguration, and produce the same detect → investigate →
-report pipeline for a cloud identity attack.
