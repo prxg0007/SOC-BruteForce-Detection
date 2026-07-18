@@ -161,10 +161,10 @@ This shows you can work with raw logs, not just a GUI.
 ## 📸 Detection Results
 
 **Brute Force Alert Query**
-![Brute Force Detection](screenshots/Query2.png)
+![Brute Force Detection](screenshots/Query 2.png)
 
 **Compromise Indicator (failed → success)**
-![Compromise indicator](screenshots/Query3.png)
+![Compromise indicator](screenshots/Query3 .png)
 
 
 **Dashboard Overview**
