@@ -1,6 +1,6 @@
 # 🚨 SOC Detection Lab: SSH Brute Force Detection & Investigation using Splunk
 
-**Author:** [Your Name]
+**Author:** Parag Dharmadhikari
 **Role Target:** SOC Analyst / Cloud Security Intern
 **Tools Used:** Splunk (SIEM), Linux (Ubuntu), Python, Hydra (attack simulation)
 
@@ -158,6 +158,17 @@ See `mitre_mapping.md`. Primary technique: **T1110 – Brute Force** (sub-techni
 This shows you can work with raw logs, not just a GUI.
 
 ---
+## 📸 Detection Results
+
+**Brute Force Alert Query**
+![Brute Force Detection](screenshots/Query 2.png)
+
+**Compromise Indicator (failed → success)**
+![Compromise indicator](screenshots/Query3 .png)
+
+
+**Dashboard Overview**
+![Dashboard](screenshots/ssh_monitoring.png)
 
 ## 📁 Repository Structure
 
@@ -179,7 +190,7 @@ SOC-BruteForce-Detection/
 │   └── sample_incident_report.md
 ├── mitre_mapping.md
 ├── cloud_extension.md
-└── screenshots/          ← add your own Splunk screenshots here
+└── screenshots/          
 ```
 
 ---
@@ -195,9 +206,4 @@ SOC-BruteForce-Detection/
 - Python log parsing / automation
 - Cloud security translation (AWS CloudTrail / GuardDuty equivalents)
 
-## 🔜 Next Project
 
-Once this is on GitHub: build a **cloud-native version** — ingest AWS CloudTrail
-logs into Splunk (or use Splunk's sample CloudTrail dataset), detect IAM misuse
-and S3 bucket misconfiguration, and produce the same detect → investigate →
-report pipeline for a cloud identity attack.
