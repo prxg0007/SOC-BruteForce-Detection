@@ -166,6 +166,8 @@ This shows you can work with raw logs, not just a GUI.
 **Compromise Indicator (failed → success)**
 ![Compromise indicator](screenshots/Query-3.png)
 
+**Triggered ALert**
+![Triggered Alert](screenshots/Triggered-Alert.png)
 
 **Dashboard Overview**
 ![Dashboard](screenshots/ssh_monitoring.png)
