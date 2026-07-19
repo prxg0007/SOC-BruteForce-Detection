@@ -131,19 +131,7 @@ A filled-out **sample incident report** is included at
 
 ---
 
-## 🌍 Step 8 — Cloud Relevance (AWS / Azure)
 
-See `cloud_extension.md` for the full write-up. Short version:
-
-| On-Prem Concept | Cloud Equivalent |
-|---|---|
-| `/var/log/auth.log` on Ubuntu | CloudTrail (API-level) + OS logs via CloudWatch Agent on EC2 |
-| SSH brute force to a VM | Brute force against EC2 public IP, or `ConsoleLogin` brute force in CloudTrail |
-| Splunk `index=main` search | Splunk Add-on for AWS ingesting CloudTrail/VPC Flow Logs |
-| IP-based alert | GuardDuty finding: `UnauthorizedAccess:EC2/SSHBruteForce` |
-| Manual IP block | Update Security Group / NACL, or AWS WAF rule |
-
----
 
 ## 🎯 MITRE ATT&CK Mapping
 
