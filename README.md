@@ -194,6 +194,6 @@ SOC-BruteForce-Detection/
 - Incident investigation and reporting (SOC workflow)
 - MITRE ATT&CK mapping
 - Python log parsing / automation
-- Cloud security translation (AWS CloudTrail / GuardDuty equivalents)
+
 
 
