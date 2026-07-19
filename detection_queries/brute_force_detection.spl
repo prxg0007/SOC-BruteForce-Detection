@@ -21,8 +21,7 @@ index=main sourcetype=linux_secure "Failed password"
 index=main sourcetype=linux_secure "Failed password"
 | rex field=_raw "Failed password for (invalid user )?(?<user>\S+) from (?<src_ip>\S+)"
 | bucket _time span=5m
-| stats count as failed_attempts by src_ip, _time
-| where failed_attempts > 10
+| stats count as failed_attempts by src_ip, _time | where failed_attempts > 3
 | sort - failed_attempts
 
 
@@ -37,7 +36,7 @@ index=main sourcetype=linux_secure ("Failed password" OR "Accepted password")
 | stats count(eval(status="failed")) as failed_count \
         count(eval(status="success")) as success_count \
         by src_ip, user
-| where failed_count > 10 AND success_count > 0
+| where failed_count > 5 AND success_count > 0
 | sort - failed_count
 
 
@@ -52,7 +51,7 @@ index=main sourcetype=linux_secure "Failed password"
 | streamstats current=f last(_time) as prev_time by src_ip
 | eval gap_seconds = _time - prev_time
 | stats avg(gap_seconds) as avg_gap_seconds count as attempts by src_ip
-| where attempts > 10 AND avg_gap_seconds < 5
+| where attempts > 3 AND avg_gap_seconds >=0
 | sort avg_gap_seconds
 
 
